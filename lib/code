@@ -1,0 +1,212 @@
+// This line brings in the Flutter material design package
+import 'package:flutter/material.dart';
+
+// This is where our app starts running
+void main() {
+  // This line tells Flutter to start our app
+  runApp(const MyApp());
+}
+
+// This is our main app widget
+class MyApp extends StatelessWidget {
+  // This is the constructor for our app
+  const MyApp({super.key});
+
+  // This method builds what we see on the screen
+  @override
+  Widget build(BuildContext context) {
+    // MaterialApp is the main container for our app
+    return MaterialApp(
+      // This is the name of our app
+      title: 'Flutter',
+      // This sets the color and style of our app
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      // This hides the debug banner in the corner
+      debugShowCheckedModeBanner: false,
+      // This sets our home page
+      home: const MyHomePage(title: 'Kuzu Zangpo la'),
+    );
+  }
+}
+
+// This is our home page widget
+class MyHomePage extends StatefulWidget {
+  // This is the constructor for our home page
+  const MyHomePage({super.key, required this.title});
+  // This is the title of our home page
+  final String title;
+
+  // This creates the state for our home page
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+// This is the state of our home page
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+  // This controls our tab bar
+  late TabController _tabController;
+
+  // This method is called when our widget is first created
+  @override
+  void initState() {
+    super.initState();
+    // This sets up our tab controller with 3 tabs
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  // This method builds what we see on the screen
+  @override
+  Widget build(BuildContext context) {
+    // Scaffold is the basic layout of our app
+    return Scaffold(
+      // This is the main content of our app
+      body: Column(
+        children: [
+          // This is the top part of our screen
+          Container(
+            // This makes the container 1/4 of the screen height
+            height: MediaQuery.of(context).size.height / 4,
+            // This sets the background color
+            color: Colors.amberAccent[400],
+            // Stack allows us to layer widgets on top of each other
+            child: Stack(
+              children: [
+                // This positions our title text
+                Positioned(
+                  top: 126.0,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 35.0),
+                      // This displays our title text
+                      child: Text(
+                        widget.title,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                    ),
+                  ),
+                ),
+                // This positions our dragon image
+                Positioned(
+                  bottom: 0.0,
+                  left: 0,
+                  right: 0,
+                  top: 35,
+                  child: Center(
+                    // This makes our dragon image see-through
+                    child: Opacity(
+                      opacity: 0.2,
+                      child: Container(
+                        height: 600,
+                        width: 250,
+                        // This displays our dragon image
+                        child: Image.network(
+                          'https://upload.wikimedia.org/wikipedia/commons/9/9e/Dragon_of_Bhutan.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // This is the bottom part of our screen with tabs
+          Expanded(
+            child: Column(
+              children: [
+                // This is our tab bar
+                Container(
+                  color: Colors.blue[50],
+                  child: TabBar(
+                    controller: _tabController,
+                    // These are our three tabs
+                    tabs: [
+                      Tab(icon: Icon(Icons.event), text: 'Event'),
+                      Tab(icon: Icon(Icons.build), text: 'Services'),
+                      Tab(icon: Icon(Icons.more), text: 'Others'),
+                    ],
+                  ),
+                ),
+                // This shows the content for each tab
+                Expanded(
+                  child: Container(
+                    color:Colors.blue[50],
+                    child: TabBarView(
+                      controller: _tabController,
+                      // These are the pages for each tab
+                      children: [
+                        EventPage(),
+                        ServicesPage(),
+                        OthersPage(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// This is the page for the Event tab
+class EventPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // This adds a bell icon
+          Icon(Icons.notifications, color: Colors.orange, size: 24.0),
+          SizedBox(width: 5.0),
+          // This adds the "Announcements" text
+          Text(
+            'Announcements',
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.amberAccent,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// This is the page for the Services tab
+class ServicesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      // This displays "Services Page" text
+      child: Text(
+        'Services Page',
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+    );
+  }
+}
+
+// This is the page for the Others tab
+class OthersPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      // This displays "Others Page" text
+      child: Text(
+        'Others Page',
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+    );
+  }
+}
