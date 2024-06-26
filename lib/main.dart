@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
                 tabs: [
-                  Tab(icon: Icon(Icons.event), text: 'Event'),
+                  Tab(icon: Icon(Icons.event), text: 'Profile'),
                   Tab(icon: Icon(Icons.build), text: 'Services'),
                   Tab(icon: Icon(Icons.more), text: 'Others'),
                 ],
